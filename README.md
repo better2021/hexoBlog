@@ -5,4 +5,4 @@ hexo主题
 
 ### hexo new page tags 新建页面
 
-### hexo -g d 一键打包部署
+### hexo g --d 一键打包部署
