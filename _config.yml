@@ -50,8 +50,8 @@ highlight:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 10
-  order_by: -date
+  per_page: 10 # 每页显示文章数，设置0为不分页
+  order_by: -date # 文章排序，默认为按时间先后排序
 
 # Category & Tag
 default_category: uncategorized

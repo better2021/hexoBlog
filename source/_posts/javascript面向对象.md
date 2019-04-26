@@ -1,7 +1,8 @@
 ---
 title: javascript面向对象
 date: 2019-02-21 22:28:11
-tags: js
+tags: 面向对象
+type: categories
 ---
 
 JavaScript 的核心是支持面向对象的，同时它也提供了强大灵活的 OOP 语言能力,
