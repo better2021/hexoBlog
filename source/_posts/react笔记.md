@@ -175,14 +175,14 @@ this.setState((state, props) => {
 
 > 在循环中，通常我们会为事件处理函数传递额外的参数。例如，若 `id` 是你要删除那一行的 ID，以下两种方式都可以向事件处理函数传递参数：
 
-```js
+```jsx
 <button onClick = {(e)=>this.deleRow(id,e)}> Delete Row </button>
 <button onClick = {this.deleteRow.bind(this,id)}> Delete Row </button>
 ```
 
 > 我们建议这些组件使用一个特殊的 `children prop` 来将他们的子组件传递到渲染结果中：
 
-```js
+```jsx
 function FancyBorder(props) {
   return (
     <div className={"FancyBorder FancyBorder-" + props.color}>
