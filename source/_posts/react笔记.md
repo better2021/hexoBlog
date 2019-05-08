@@ -179,3 +179,47 @@ this.setState((state, props) => {
 <button onClick = {(e)=>this.deleRow(id,e)}> Delete Row </button>
 <button onClick = {this.deleteRow.bind(this,id)}> Delete Row </button>
 ```
+
+> 我们建议这些组件使用一个特殊的 `children prop` 来将他们的子组件传递到渲染结果中：
+
+```js
+function FancyBorder(props) {
+  return (
+    <div className={"FancyBorder FancyBorder-" + props.color}>
+      {props.children}
+    </div>
+  )
+}
+```
+
+> 这使得别的组件可以通过 JSX 嵌套，将任意组件作为子组件传递给它们。
+
+```js
+function WelcomeDialog() {
+  return (
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">Welcome</h1>
+      <p className="Dialog-message">Thank you for visiting our spacecraft!</p>
+    </FancyBorder>
+  )
+}
+```
+
+> 在 React 中，我们也可以通过组合来实现这一点。“特殊”组件可以通过 props 定制并渲染“一般”组件：
+
+```js
+function Dialog(props) {
+  return (
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">{props.title}</h1>
+      <p className="Dialog-message">{props.message}</p>
+    </FancyBorder>
+  )
+}
+
+function WelcomeDialog() {
+  return (
+    <Dialog title="Welcome" message="Thank you for visiting our spacecraft!" />
+  )
+}
+```
