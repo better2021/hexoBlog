@@ -10,50 +10,50 @@ React 是一个为数据提供渲染为 HTML 视图的开源 JavaScript 库。Re
 > 例如：MyComponents.DatePiker 的组件，可以直接在 jsx 中使用它
 
 ```js
-import React from 'react';
+import React from "react"
 const MyComponents = {
   DatePicker: function DatePicker(props) {
-    return <div>Image a {props.color} here</div>;
+    return <div>Image a {props.color} here</div>
   }
-};
+}
 
 function BlueDatePicker() {
-  return <MyComponents.DatePicker color="blue" />;
+  return <MyComponents.DatePicker color="blue" />
 }
 ```
 
 **用户自定义组件的首字母必须大写**
 
 ```js
-import React from 'react';
+import React from "react"
 
 // 正确！组件名应该首字母大写:
 function Hello(props) {
   // 正确！div 是有效的 HTML 标签:
-  return <div>Hello {props.toWhat}</div>;
+  return <div>Hello {props.toWhat}</div>
 }
 
 function HelloWorld() {
   // 正确！React 能够将大写开头的标签名认为是 React 组件。
-  return <Hello toWhat="World" />;
+  return <Hello toWhat="World" />
 }
 ```
 
 > 运行时选择类型
 
 ```js
-import React from 'react';
-import { PhotoStory, VideoStory } from './stories';
+import React from "react"
+import { PhotoStory, VideoStory } from "./stories"
 
 const components = {
   photo: PhotoStory,
   video: VideoStory
-};
+}
 
 function Story(props) {
   // 正确！JSX 标签名可以为大写开头的变量。
-  const SpecificStory = components[props.storyType];
-  return <SpecificStory story={props.story} />;
+  const SpecificStory = components[props.storyType]
+  return <SpecificStory story={props.story} />
 }
 ```
 
@@ -61,27 +61,27 @@ function Story(props) {
 
 ```js
 function App1() {
-  return <Greeting firstName="Ben" lastName="Hector" />;
+  return <Greeting firstName="Ben" lastName="Hector" />
 }
 
 function App2() {
-  const props = { firstName: 'Ben', lastName: 'Hector' };
-  return <Greeting {...props} />;
+  const props = { firstName: "Ben", lastName: "Hector" }
+  return <Greeting {...props} />
 }
 ```
 
 > 使用`PropTypes`进行类型检查
 
 ```js
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types"
 class Greeting extends React.Component {
   render() {
-    return <h1>hello,{this.props.name}</h1>;
+    return <h1>hello,{this.props.name}</h1>
   }
 }
 Greeting.propTypes = {
   name: proptypes.string
-};
+}
 ```
 
 _PropTypes 包含一整套验证器，可用于确保你接收的数据是有效的。在这个示例中，我们使用了 PropTypes.string。当你给属性传递了无效值时，JavsScript 控制台将会打印警告。出于性能原因，propTypes 只在开发模式下进行检查_
@@ -90,25 +90,25 @@ _PropTypes 包含一整套验证器，可用于确保你接收的数据是有效
 
 ```js
 // 自执行函数
-(function(x) {
-  console.log(x); // 10
-})(10);
+;(function(x) {
+  console.log(x) // 10
+})(10)
 ```
 
 ```js
 class Greeting extends React.Component {
   render() {
-    return <h1>hello,{this.props.name}</h1>;
+    return <h1>hello,{this.props.name}</h1>
   }
 }
 
 // 为属性指定默认值
 Greeting.defaultProps = {
-  name: 'Stranger'
-};
+  name: "Stranger"
+}
 
 // 渲染 'hello,Stranger'
-ReactDOM.render(<Greeting />, document.getElementById('example'));
+ReactDOM.render(<Greeting />, document.getElementById("example"))
 ```
 
 > Refs 提供了一种方式，用于访问在 render 方法中创建的 DOM 节点或 React 元素
@@ -116,11 +116,11 @@ ReactDOM.render(<Greeting />, document.getElementById('example'));
 ```js
 class MyComponent extends React.Component {
   constructor(props) {
-    surper(props);
-    this.myRef = React.createRef();
+    surper(props)
+    this.myRef = React.createRef()
   }
   rebder() {
-    return <div ref={this.myRft} />;
+    return <div ref={this.myRft} />
   }
 }
 ```
@@ -144,5 +144,38 @@ store.getState()
 
 // action只能用dispatch去触发更新
 store.dispatch({type:'ADD'}) // 调用type为ADD的action
+```
 
+### State 的更新可能是异步的
+
+> 因为 `this.props` 和 `this.state` 可能会异步更新，所以你不要依赖他们的值来更新下一个状态。
+
+```js
+// 例如，此代码可能会无法更新计数器：
+// wrong
+this.setState({
+  counter: this.state.counter + this.props.increment
+})
+```
+
+> 要解决这个问题，可以让 `setState()` 接收一个函数而不是一个对象。这个函数用上一个 `state` 作为第一个参数，将此次更新被应用时的 `props` 做为第二个参数
+
+```js
+// correct  正确的方法去更新下一个状态
+this.setState((state, props) => ({
+  counter: state.counter + props.increment
+}))
+// 这两种写法效果是一致的，在箭头函数后加({}),相当于return{}
+this.setState((state, props) => {
+  return { counter: state.counter + props.increment }
+})
+```
+
+### 向事件处理程序传递参数
+
+> 在循环中，通常我们会为事件处理函数传递额外的参数。例如，若 `id` 是你要删除那一行的 ID，以下两种方式都可以向事件处理函数传递参数：
+
+```js
+<button onClick = {(e)=>this.deleRow(id,e)}> Delete Row </button>
+<button onClick = {this.deleteRow.bind(this,id)}> Delete Row </button>
 ```
