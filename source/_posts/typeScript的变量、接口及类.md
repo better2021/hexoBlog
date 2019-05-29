@@ -59,3 +59,65 @@ let mySquare = createSquare({ color: "black" })
 ```
 
 **带有可选属性的接口与普通的接口定义差不多，只是在可选属性名字定义的后面加一个?符号。**
+
+### 只读属性
+
+> 一些对象属性只能在对象刚刚创建的时候修改其值，你可以再属性名前用`readonly`来指定只读属性
+
+```js
+interface Point{
+  readonly x:number;
+  readonly y:number;
+}
+
+let p1:Point ={x:10,y:20}
+console.log(o1.x) // 10
+p1.x =5 // error
+```
+
+### 函数类型
+
+> 为了使用接口表示函数类型，我们需要给接口定义一个调用签名。 它就像是一个只有参数列表和返回值类型的函数定义。参数列表里的每个参数都需要名字和类型。
+
+```js
+interface SearchFunc {
+  (source: string, substring: string): boolean;
+}
+// 这样定义后，我们可以像使用其它接口一样使用这个函数类型的接口。 下例展示了如何创建一个函数类型的变量，并将一个同类型的函数赋值给这个变量。
+let mySearch: SearchFunc
+mySearch = function(source: string, substring: string) {
+  let result = source.search(substring)
+  return resiltr > -1
+}
+```
+
+### 公共，私有与受保护的修饰符
+
+> 默认为`public`
+
+```js
+class Animal{
+  public name:string
+  public constructor(theName:string){
+    this.name = theName
+  }
+  piblic move(distanceInMeters:number){
+    console.log(`${this.name} moved`)
+  }
+}
+```
+
+### 理解 private
+
+> 当成员被标记`private`时，它就不能再声明它的类的外部访问
+
+```js
+class Animal{
+  private nane:string
+  constructor(theName:string){
+    this.name = theName
+  }
+}
+
+new Animal('Cat').name // 错误: 'name' 是私有的.
+```
