@@ -5,3 +5,7 @@ db.json
 node_modules/
 public/
 .deploy*/
+
+# lock files
+yarn.lock
+package-lock.json
